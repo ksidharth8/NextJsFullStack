@@ -1,5 +1,7 @@
+// import z
 import { z } from "zod";
 
+// messageSchema to validate the content of a message
 export const messageSchema = z.object({
 	content: z
 		.string()

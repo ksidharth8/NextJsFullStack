@@ -1,5 +1,7 @@
+// import z
 import { z } from "zod";
 
+// usernameValidation to validate the username field
 export const usernameValidation = z
 	.string()
 	.min(3, "Username must be at least 3 characters long")
@@ -9,6 +11,7 @@ export const usernameValidation = z
 		"Username must not contain any special characters"
 	);
 
+// signUpSchema to validate the username, email, and password fields
 export const signUpSchema = z.object({
 	username: usernameValidation,
 	email: z.string().email({ message: "Invalid email address" }),
