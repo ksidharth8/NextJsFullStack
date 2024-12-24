@@ -59,14 +59,8 @@ const userSchema: Schema<User> = new Schema({
 });
 
 // define the models for the User and Message
-const UserSchema =
+const UserModel =
 	(models.User as Model<User>) || model<User>("User", userSchema);
-// const MessageSchema =
-// 	(models.Message as Model<Message>) ||
-// 	model<Message>("Message", messageSchema);
 
 // export the models
-module.exports = {
-	UserSchema,
-	// MessageSchema,
-};
+export default UserModel;
