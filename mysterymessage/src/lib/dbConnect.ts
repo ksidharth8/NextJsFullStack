@@ -20,8 +20,8 @@ async function dbConnect(): Promise<void> {
 	try {
         // Connect to MongoDB
 		const db = await mongoose.connect(process.env.MONGODB_URI || "", {});
-		console.log("db: ", db);
-		console.log("db.connections: ", db.connections);
+		// console.log("db: ", db);
+		// console.log("db.connections: ", db.connections);
 		connection.isConnected = db.connections[0].readyState;
 		console.log("Connection to MongoDB established");
 	} catch (error) {

@@ -68,7 +68,7 @@ export async function POST(request: Request): Promise<Response> {
 				email,
 				password: hashedPassword,
 				verifyCode: otp,
-				verifyCodeExpire: expiryDate,
+				verifyCodeExpiry: expiryDate,
 				isVerified: false,
 				isAcceptingMessages: true,
 				messages: [],
@@ -103,7 +103,7 @@ export async function POST(request: Request): Promise<Response> {
 		);
 	} catch (error) {
 		// log error and return error response
-		console.error("Error registering user", error);
+		console.error("Error registering user\n",error);
 		return Response.json(
 			{
 				success: false,
