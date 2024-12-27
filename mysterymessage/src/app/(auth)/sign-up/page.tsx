@@ -1,5 +1,6 @@
 "use client";
 
+// import required modules
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -23,13 +24,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 
+// define Page component
 const Page = () => {
+	// define local state variables
 	const [username, setUsername] = useState("");
 	const [usernameMessage, setUsernameMessage] = useState("");
 	const [isCheckingUsername, setIsCheckingUsername] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const debounced = useDebounceCallback(setUsername, 300);
+	// define debounced function to check username uniqueness after 300ms of typing
+	const debounced = useDebounceCallback(setUsername, 300); // useDebounceCallback creates a debounced function (function called after some time)
+
+	// define required hooks
 	const { toast } = useToast();
 	const router = useRouter();
 
@@ -43,13 +49,14 @@ const Page = () => {
 		},
 	});
 
-	//
+	// useEffect to check username uniqueness after typing
 	useEffect(() => {
 		const checkUsernameUnique = async () => {
 			if (username) {
 				setIsCheckingUsername(true);
 				setUsernameMessage("");
 				try {
+					// check username uniqueness using axios GET request to /api/check-username-unique
 					const response = await axios.get(
 						`/api/check-username-unique?username=${username}`
 					);
@@ -69,18 +76,21 @@ const Page = () => {
 		checkUsernameUnique();
 	}, [username]);
 
-	//
+	// onSubmit function to sign up user
 	const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
 		console.log("data: ", data);
 		setIsSubmitting(true);
 		try {
+			// sign up user using axios POST request to /api/sign-up
 			const response = await axios.post<ApiResponse>("/api/sign-up", data);
 			toast({
 				title: "success",
 				description: response.data.message,
 			});
+			// redirect to /verify/username page
 			router.replace(`/verify/${username}`);
 		} catch (error) {
+			// return error response if sign up fails
 			console.log("Error signing up", error);
 			const axiosError = error as AxiosError<ApiResponse>;
 			const errorMessage =
@@ -96,6 +106,7 @@ const Page = () => {
 	};
 
 	return (
+		// return sign up form
 		<div className="flex justify-center items-center min-h-screen bg-gray-800">
 			<div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
 				<div className="text-center">
@@ -122,25 +133,27 @@ const Page = () => {
 											placeholder="username"
 											{...field}
 											onChange={(e) => {
+												// onChange event to set username and call debounced function
 												field.onChange(e);
 												debounced(e.target.value);
 											}}
 										/>
 									</FormControl>
-									{isCheckingUsername && (
+									{isCheckingUsername && ( // show loader while checking username
 										<Loader2 className="animate-spin" />
 									)}
-									{!isCheckingUsername && usernameMessage && (
-										<p
-											className={`text-sm ${
-												usernameMessage === "Username is unique"
-													? "text-green-500"
-													: "text-red-500"
-											}`}
-										>
-											{usernameMessage}
-										</p>
-									)}
+									{!isCheckingUsername &&
+										usernameMessage && ( // show username message after checking
+											<p
+												className={`text-sm ${
+													usernameMessage === "Username is unique"
+														? "text-green-500"
+														: "text-red-500"
+												}`}
+											>
+												{usernameMessage}
+											</p>
+										)}
 									<FormMessage />
 								</FormItem>
 							)}
@@ -180,7 +193,7 @@ const Page = () => {
 							type="submit"
 							disabled={isSubmitting}
 						>
-							{isSubmitting ? (
+							{isSubmitting ? ( // show loader while submitting
 								<>
 									<Loader2 className="mr-2 w-4 h-4 animate-spin" />
 									Please wait...
@@ -195,7 +208,7 @@ const Page = () => {
 					<p>
 						Already a member?{" "}
 						<Link
-							href="/sign-in"
+							href="/sign-in" // link to sign in page
 							className="text-blue-600 hover:text-blue-800"
 						>
 							Sign in
