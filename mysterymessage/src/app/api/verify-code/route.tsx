@@ -14,7 +14,7 @@ export async function POST(request: Request): Promise<Response> {
 		const decodedUsername = decodeURIComponent(username);
 
 		// check for existing user with username and verified status
-		const existingUser = await UserModel.findOne({ decodedUsername });
+		const existingUser = await UserModel.findOne({ username:decodedUsername });
 
 		// return error response if user not found
 		if (!existingUser) {

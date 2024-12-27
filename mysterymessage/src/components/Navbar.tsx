@@ -35,10 +35,8 @@ const Navbar = () => {
 					</>
 				) : (
 					<Link href="/sign-in">
-						<Button
-							className="w-full md:w-auto bg-slate-100 text-black"
-						>
-							Login
+						<Button className="w-full rounded md:w-auto bg-slate-100 text-black">
+							<div className="px-3">Login</div>
 						</Button>
 					</Link>
 				)}
