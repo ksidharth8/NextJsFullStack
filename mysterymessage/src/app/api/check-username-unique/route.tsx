@@ -15,14 +15,13 @@ export async function GET(request: Request): Promise<Response> {
 	await dbConnect();
 	try {
 		// get searchParams from request URL
-		const { searchParams } = new URL(request.url); // eg: http://localhost:3000/api/cuu?username=abc?email=xyz
+		const searchParam = new URL(request.url).searchParams;	// e.g. /api/check-username-unique?username=abc
 
 		// get username from searchParams
-		const queryParam = { username: searchParams.get("username") }; // abc\
+		const queryParam = { username: searchParam.get("username") };	// e.g. { username: "abc" }
 
 		// validate the username query with zod
-		const result = UsernameQuerySchema.safeParse(queryParam);
-		console.log("username: ", result);
+		const result = UsernameQuerySchema.safeParse(queryParam);	// e.g. { success: true, data: { username: "abc" } }
 
 		// return error response if username is invalid
 		if (!result.success) {
