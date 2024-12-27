@@ -9,7 +9,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { CardHeader, CardContent, Card } from "@/components/ui/card";
-import { useCompletion } from "ai/react";
+// import { useCompletion } from "ai/react";
 import {
 	Form,
 	FormControl,
@@ -26,12 +26,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { messageSchema } from "@/schemas/messageSchema";
 
-// define special character for splitting messages
-const specialChar = "||";
-
 // define parseStringMessages function
 const parseStringMessages = (messageString: string): string[] => {
-	return messageString.split(specialChar);
+	return messageString.split("||");
 };
 
 // define initial message string
@@ -42,55 +39,49 @@ const initialMessageString =
 export default function SendMessage() {
 	// define required hooks
 	const params = useParams<{ username: string }>();
-	const {
-		complete,
-		completion,
-		isLoading: isSuggestLoading,
-		error,
-	} = useCompletion({
-		api: "/api/suggest-messages",
-		initialCompletion: initialMessageString,
-	});
+	// const {complete,completion,isLoading: isSuggestLoading,error} = useCompletion({api: "/api/suggest-messages",initialCompletion: initialMessageString,});
 
 	// define required states
 	const username = params?.username ?? "";
+	const [suggestedMessages, setSuggestedMessages] =
+		useState(initialMessageString);
 
-  // define form
+	// define form
 	const form = useForm<z.infer<typeof messageSchema>>({
 		resolver: zodResolver(messageSchema),
 	});
 
-  // define required functions
+	// define required functions
 	const messageContent = form.watch("content");
 
-  // define handleMessageClick function
+	// define handleMessageClick function
 	const handleMessageClick = (message: string) => {
 		form.setValue("content", message);
 	};
 
-  // define isLoading state
+	// define isLoading state
 	const [isLoading, setIsLoading] = useState(false);
-  
-  // define onSubmit function
+
+	// define onSubmit function
 	const onSubmit = async (data: z.infer<typeof messageSchema>) => {
 		setIsLoading(true);
 		try {
-      // send POST request to /api/send-message
+			// send POST request to /api/send-message
 			const response = await axios.post<ApiResponse>("/api/send-message", {
 				...data,
 				username,
 			});
 
-      // show success toast
+			// show success toast
 			toast({
 				title: response.data.message,
 				variant: "default",
 			});
-      
-      // reset form after submission
+
+			// reset form after submission
 			form.reset({ ...form.getValues(), content: "" });
 		} catch (error) {
-      // return error response if send fails and show error toast
+			// return error response if send fails and show error toast
 			const axiosError = error as AxiosError<ApiResponse>;
 			toast({
 				title: "Error",
@@ -103,18 +94,22 @@ export default function SendMessage() {
 		}
 	};
 
-  // define fetchSuggestedMessages function
+	// define fetchSuggestedMessages function
 	const fetchSuggestedMessages = async () => {
 		try {
-      // fetch suggested messages using useCompletion hook
-			complete("");
+			// fetch suggested messages using useCompletion hook
+			// 		complete("");
+
+			// fetch suggested messages using axios and set suggested messages
+			const response = await axios.get("/api/suggest-messages");
+			setSuggestedMessages(response.data.suggestedMessages);
 		} catch (error) {
 			console.error("Error fetching messages:", error);
 			// Handle error appropriately
 		}
 	};
 
-  // return JSX component
+	// return JSX component
 	return (
 		<div className="container mx-auto my-8 p-6 bg-white rounded max-w-4xl">
 			<h1 className="text-4xl font-bold mb-6 text-center">
@@ -164,7 +159,7 @@ export default function SendMessage() {
 					<Button
 						onClick={fetchSuggestedMessages}
 						className="my-4"
-						disabled={isSuggestLoading}
+						// disabled={isSuggestLoading}
 					>
 						Suggest Messages
 					</Button>
@@ -175,10 +170,14 @@ export default function SendMessage() {
 						<h3 className="text-xl font-semibold">Messages</h3>
 					</CardHeader>
 					<CardContent className="flex flex-col space-y-4">
-						{error ? (
-							<p className="text-red-500">{error.message}</p>
+						{/* {Error ? ( */}
+						{false ? ( // remove Error condition (TODO)
+							<p className="text-red-500">{Error.toString()}</p>
 						) : (
-							parseStringMessages(completion).map((message, index) => (
+							parseStringMessages(
+								// completion
+								suggestedMessages
+							).map((message, index) => (
 								<Button
 									key={index}
 									variant="outline"
