@@ -9,8 +9,8 @@ export async function DELETE(
 	request: Request,
 	{ params }: { params: { messageid: string } }
 ) {
-	// Ensure `messageid` is available in `params`
-	const { messageid: messageId } = params;
+	// Get the `messageId` from the request params
+	const messageId = params.messageid;
 
 	// Connect to the database
 	await dbConnect();
