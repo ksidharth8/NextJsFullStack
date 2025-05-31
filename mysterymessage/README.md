@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🕵️ MysteryMessage
 
-First, run the development server:
+**MysteryMessage** is a secure, ephemeral messaging platform built with Next.js and MongoDB. It allows users to send confidential messages that self-destruct after being read, ensuring privacy and discretion.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Features
+
+- 🔒 **End-to-End Encryption**: Messages are encrypted to ensure only the intended recipient can read them.
+- 🧾 **Unique Message Links**: Each message generates a unique link for secure sharing.
+- 📬 **No Account Required**: Send messages without the need to create an account.
+- 📱 **Responsive Design**: Optimized for both desktop and mobile devices.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v14 or later)
+- [MongoDB](https://www.mongodb.com/) (local or Atlas)
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/ksidharth8/NextJsFullStack.git
+   cd NextJsFullStack/mysterymessage
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables:**
+
+   Create a `.env.local` file in the root directory and add your MongoDB connection string:
+
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   ```
+
+4. **Run the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+---
+
+## 🧪 Technologies Used
+
+- [Next.js](https://nextjs.org/) – React framework for server-side rendering and static site generation.
+- [MongoDB](https://www.mongodb.com/) – NoSQL database for storing messages.
+- [Tailwind CSS](https://tailwindcss.com/) – Utility-first CSS framework for styling.
+- [Vercel](https://vercel.com/) – Deployment platform for frontend applications.
+
+---
+
+## 📁 Project Structure
+
+```
+mysterymessage/
+├── components/       # Reusable React components
+├── pages/            # Next.js pages
+├── public/           # Static assets
+├── styles/           # Global styles
+├── utils/            # Utility functions
+├── .env.local        # Environment variables
+├── next.config.js    # Next.js configuration
+└── package.json      # Project metadata and scripts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Future Enhancements
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 📆 **Expiration Timers**: Set messages to expire after a certain time.
+- 📊 **Analytics Dashboard**: Track message views and statistics.
+- 🔔 **Email Notifications**: Notify recipients when a message is received.
+- ⏳ **Self-Destructing Messages**: Messages automatically delete after being read once.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤝 Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
+
+---
+
+## 📬 Contact
+
+For any inquiries or feedback, feel free to reach out:
+
+- **GitHub**: [ksidharth8](https://github.com/ksidharth8)
+- **Email**: kumarsidharth333@gmail.com
